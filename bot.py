@@ -22,7 +22,6 @@ app = Client(
 user_states = {}
 
 # --- Button Generation Functions ---
-# ... (These functions remain unchanged) ...
 def get_main_menu_keyboard():
     buttons = []
     for text, data in config.MAIN_MENU_BUTTONS.items():
@@ -49,7 +48,6 @@ def get_stars_menu_keyboard():
     return InlineKeyboardMarkup(keyboard_layout)
 
 # --- Command & Message Handlers ---
-# ... (start, profile, leaderboard, menu_handler, and custom_amount_handler remain unchanged) ...
 @app.on_message(filters.command("start") & filters.private)
 async def start_handler(client: Client, message: Message):
     await message.reply_photo(
@@ -149,7 +147,8 @@ async def menu_handler(client: Client, callback_query: CallbackQuery):
         logging.error(f"Error in menu_handler: {e}")
         await callback_query.answer("An error occurred.", show_alert=True)
 
-@app.on_message(filters.private & filters.text & ~filters.command())
+# --- THIS IS THE CORRECTED LINE ---
+@app.on_message(filters.private & filters.text & ~filters.command)
 async def custom_amount_handler(client: Client, message: Message):
     user_id = message.from_user.id
     if user_states.get(user_id) == "awaiting_custom_amount":
@@ -172,8 +171,6 @@ async def custom_amount_handler(client: Client, message: Message):
             prices=[LabeledPrice(f"{amount} Telegram Stars", amount)]
         )
 
-# --- THE ONLY MODIFIED FUNCTION IS BELOW ---
-
 @app.on_message(filters.successful_payment)
 async def successful_payment_handler(client: Client, message: Message):
     if message.successful_payment.currency == "XTR":
@@ -181,7 +178,6 @@ async def successful_payment_handler(client: Client, message: Message):
         amount = message.successful_payment.total_amount
         tier_name = config.STARS_TIERS.get(str(amount), f"{amount} Stars (Custom)")
         
-        # 1. Record donation in the database
         db.record_donation(
             user_id=user.id,
             first_name=user.first_name,
@@ -190,14 +186,12 @@ async def successful_payment_handler(client: Client, message: Message):
             tier=tier_name
         )
 
-        # 2. Reply to the user
         await message.reply_text(
             f"🎉 Thank you for your donation of **{amount} Stars** ({tier_name.strip()})!\n\n"
             "Your contribution has been recorded. You can check your stats with /profile.",
             parse_mode=enums.ParseMode.MARKDOWN
         )
 
-        # --- 3. SEND LOG MESSAGE TO THE CHANNEL ---
         if config.LOG_CHANNEL_ID:
             try:
                 log_message = (
@@ -214,7 +208,6 @@ async def successful_payment_handler(client: Client, message: Message):
                 )
             except Exception as e:
                 logging.error(f"Could not send log message to channel: {e}")
-        # ---------------------------------------------
 
 # --- Main Execution ---
 async def main():
