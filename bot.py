@@ -1,57 +1,22 @@
 # bot.py
-import os
 import logging
-from flask import Flask, request
 from pyrogram import Client, filters, enums
 from pyrogram.types import (
-    Update, Message, CallbackQuery, InlineKeyboardMarkup, 
-    InlineKeyboardButton, LabeledPrice
+    Message, CallbackQuery, InlineKeyboardMarkup, InlineKeyboardButton,
+    LabeledPrice
 )
 from pyrogram.errors import MessageNotModified
 
-# --- CONFIG AND BASIC SETUP ---
 import config
 
+# --- Basic Bot Setup ---
 logging.basicConfig(level=logging.INFO)
-
-# Initialize the Flask app, which is our web server
-server = Flask(__name__)
-
-# Initialize the Pyrogram client
-# We use in_memory=True because Vercel has an ephemeral filesystem.
 app = Client(
     "DonationMenuBot",
     api_id=config.API_ID,
     api_hash=config.API_HASH,
-    bot_token=config.BOT_TOKEN,
-    in_memory=True 
+    bot_token=config.BOT_TOKEN
 )
-
-# --- WEBHOOK ENTRY POINT ---
-# This is the single URL that Telegram will send all updates to.
-@server.route(f"/{config.BOT_TOKEN}", methods=["POST"])
-async def webhook_handler():
-    try:
-        # Get the JSON data from Telegram's request
-        update_json = request.get_json()
-        
-        # Pyrogram needs to parse this JSON into its internal Update object
-        update = await app.parser.parse(update_json)
-
-        # This is the magic part: Pyrogram's dispatcher will now find the
-        # correct handler (@app.on_message, @app.on_callback_query, etc.)
-        # and run it, just like it did with long polling.
-        await app.process_updates(update, None)
-
-        # Tell Telegram we successfully received the update
-        return "OK", 200
-    except Exception as e:
-        logging.error(f"Error in webhook_handler: {e}")
-        return "Error", 500
-
-# ==============================================================================
-#  !!! ALL YOUR ORIGINAL BOT LOGIC IS BELOW AND UNCHANGED !!!
-# ==============================================================================
 
 # --- Button Generation Functions ---
 
@@ -77,6 +42,7 @@ def get_stars_menu_keyboard():
     keyboard_layout.append([InlineKeyboardButton("« Back", callback_data="main_menu")])
     return InlineKeyboardMarkup(keyboard_layout)
 
+
 # --- Handlers ---
 
 @app.on_message(filters.command("start") & filters.private)
@@ -90,7 +56,6 @@ async def start_handler(client: Client, message: Message):
 
 @app.on_callback_query()
 async def menu_handler(client: Client, callback_query: CallbackQuery):
-    """This function is still here and is essential! It handles all button presses."""
     data = callback_query.data
     
     try:
@@ -149,12 +114,13 @@ async def successful_payment_handler(client: Client, message: Message):
             parse_mode=enums.ParseMode.MARKDOWN
         )
 
-# --- Main Execution (No changes here) ---
+# --- Main Execution ---
 async def main():
+    """Main function to start the bot and keep it running."""
     await app.start()
     me = await app.get_me()
-    logging.info(f"Bot @{me.username} started!")
-    await app.idle()
+    logging.info(f"Bot @{me.username} started successfully!")
+    await app.idle() # This keeps the bot running until you stop it (e.g., with Ctrl+C)
     await app.stop()
 
 if __name__ == "__main__":
