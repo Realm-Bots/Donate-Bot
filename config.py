@@ -31,7 +31,9 @@ CRYPTO_TEXT = f"""
 **Mᴀɪɴ Cʀʏᴘᴛᴏ Aᴅᴅʀᴇss:**
 
 **BTC:** `135G6kyKpfwZbHXUYu4gsJaoJPBnrDDSbQ`
+
 **TON:** `UQCwKMw3WvaEvZ9SIsmc4Mxuz4Yu_-5SsFb2JUEH70Lz0ssx`
+
 **OPBNB:** `0x456945634e4d9d9b9a6069f72a869963281aa40e`
 
 **ɪғ ʏᴏᴜ ɴᴇᴇᴅ ᴀɴᴏᴛʜᴇʀ ᴄʀʏᴘᴛᴏ ᴀᴅᴅʀᴇss, ᴘʟᴇᴀsᴇ [ᴄᴏɴᴛᴀᴄᴛ ᴍʏ ᴍᴀsᴛᴇʀ ʜᴇʀᴇ](tg://user?id={OWNER_ID}).**
