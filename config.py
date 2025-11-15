@@ -8,14 +8,15 @@ load_dotenv()
 API_ID = int(os.environ.get("API_ID", 0))
 API_HASH = os.environ.get("API_HASH")
 BOT_TOKEN = os.environ.get("BOT_TOKEN")
+MONGO_URI = os.environ.get("MONGO_URI") # <-- NEW
 # ----------------
 
-# --- TEXTS ---
-# This is where you can now use Markdown formatting freely.
-# For example: **bold**, *italic*, `code`, [link](https://telegram.org)
+# --- PICTURES ---
+# Replace these with direct links to your images
+START_PIC_URL = "https://i.imgur.com/8V1sV2b.jpeg"
+PROFILE_PIC_URL = "https://i.imgur.com/m852G7A.jpeg"
 
-# Your bot's owner user ID (as an integer), for the "master" link.
-# Get it from @userinfobot
+# --- TEXTS ---
 OWNER_ID = 123456789 
 
 START_TEXT = """
@@ -30,20 +31,13 @@ CRYPTO_TEXT = f"""
 **Main Crypto Address:** ❞
 (Same address for same network)
 **BTC:** `1DxGWYXeSMqqpouJeHEqHsLuxGv1ydkCoe`
-**TRX (TRC20):** `TSZUxHqvNhQMUkUPB92vzCVcVANxZGs3tD`
-**TON:** `EQBRYjGMy_f7wQSy518W9mmBTjRtAvT4VBJ3pS51jwDkn8pP`
-
-**Backup Crypto Address:** ❞
-(Same address for same network)
-**BTC:** `1PuNnnBcW7eYmx4F9jafNd4bRsjvkQueNd`
 
 If you need another crypto address, please [contact my master here](tg://user?id={OWNER_ID}).
 """
 
 STARS_TEXT = "**How many stars do you want to donate?**"
 
-# --- BUTTONS (No changes here) ---
-
+# --- BUTTONS ---
 MAIN_MENU_BUTTONS = {
     "Crypto": "callback:crypto",
     "Dana": "url:https://link.dana.id/qr/yourcode",
