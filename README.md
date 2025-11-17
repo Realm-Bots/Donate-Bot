@@ -77,7 +77,7 @@ leaderboard - Donation leaderboard
 </h3>
 <p>
 <pre>
-git clone https://github.com/Realm-Bots/Donate-Bot
+git clone https://github.com/Realm-Bots/Donation-Bot
 # Install Packages
 pip3 install -U -r requirements.txt
 # Start the Bot
