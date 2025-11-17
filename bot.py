@@ -1,4 +1,4 @@
-# bot.py
+# Made By @NaapaExtraa For @Realm_Bots
 import logging
 from pyrogram import Client, filters, enums, idle
 from pyrogram.types import (
@@ -10,7 +10,6 @@ from pyrogram.errors import MessageNotModified
 import config
 import database as db
 
-# --- Basic Bot Setup ---
 logging.basicConfig(level=logging.INFO)
 app = Client(
     "DonationMenuBot",
@@ -21,7 +20,6 @@ app = Client(
 
 user_states = {}
 
-# --- Button Generation Functions ---
 def get_main_menu_keyboard():
     buttons = []
     for text, data in config.MAIN_MENU_BUTTONS.items():
@@ -47,7 +45,6 @@ def get_stars_menu_keyboard():
     keyboard_layout.append([InlineKeyboardButton("« Bᴀᴄᴋ", callback_data="main_menu")])
     return InlineKeyboardMarkup(keyboard_layout)
 
-# --- Command & Message Handlers ---
 @app.on_message(filters.command("start") & filters.private)
 async def start_handler(client: Client, message: Message):
     await message.reply_photo(
@@ -147,17 +144,13 @@ async def menu_handler(client: Client, callback_query: CallbackQuery):
         logging.error(f"Error in menu_handler: {e}")
         await callback_query.answer("An error occurred.", show_alert=True)
 
-
-# --- THIS IS THE CORRECTED FUNCTION ---
 @app.on_message(filters.private & filters.text)
 async def custom_amount_handler(client: Client, message: Message):
     user_id = message.from_user.id
     
-    # Check if we are waiting for an amount from this user. If not, do nothing.
     if user_states.get(user_id) != "awaiting_custom_amount":
         return
     
-    # Clear the state immediately so this doesn't trigger again
     user_states.pop(user_id, None)
     
     try:
@@ -218,7 +211,6 @@ async def successful_payment_handler(client: Client, message: Message):
             except Exception as e:
                 logging.error(f"Could not send log message to channel: {e}")
 
-# --- Main Execution ---
 async def main():
     await app.start()
     me = await app.get_me()
