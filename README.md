@@ -9,7 +9,7 @@
 </p>
 
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=ULTIMATE+FILESTORE+BOT!;CREATED+BY+REALM+BOTS!;A+ADVANCE+BOT+WITH+COOL+FEATURE!)
+![Typing SVG](https://readme-typing-svg.herokuapp.com/?lines=TELEGRAM+DONATION+BOT!;CREATED+BY+REALM+BOTS!;A+DONATION+BOT+WITH+COOL+FEATURE!)
 </p>
 
  ━━━━━━━━━━━━━━━━━
