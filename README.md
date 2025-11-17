@@ -1,11 +1,11 @@
 ━━━━━━━━━━━━━━━━━━━━
 
 <h2 align="center">
-ᴛᴇʟᴇɢʀᴀᴍ ᴅᴏɴᴀᴛᴇ ʙᴏᴛ
+ᴛᴇʟᴇɢʀᴀᴍ ᴅᴏɴᴀᴛɪᴏɴ ʙᴏᴛ
 </h2>
 
 <p align="center">
-  <img src="https://files.catbox.moe/5o6qbm.jpg">
+  <img src="https://files.catbox.moe/3dm7jj.jpg">
 </p>
 
 
